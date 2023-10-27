@@ -4,13 +4,18 @@
 
 Clear-Host
 
+# List all USB devices
+Get-CimInstance -Class Win32_Volume  | format-table -Property Name, label, Caption, DeviceId
+
+
+$rVolume = Get-CimInstance -Class Win32_Volume | Where-Object { $_.Label -eq 'BlackToshiba2TB' }  ##  | format-table -Property Name, label
+$rVolume
+
+Set-CimInstance -InputObject $rVolume -Property @{DriveLetter = "R:" } -PassThru
+
+$rVolume = Get-CimInstance -Class Win32_Volume | Where-Object { $_.Label -eq 'BlackToshiba2TB' }  ##  | format-table -Property Name, label
+$rVolume
+# Get-CimInstance -Class Win32_Processor
 
 # List all USB devices
-get-wmiobject -Class Win32_Volume  | format-table -Property Name, label
-
-
-$rVolume = get-wmiobject -Class Win32_Volume | where{$_.Label -eq 'BlackToshiba2GB'}  ##  | format-table -Property Name, label
-$rVolume.DriveLetter = 'R:'
-$rVolume.Put()
-
-#$rVolume
+Get-CimInstance -Class Win32_Volume  | format-table -Property Name, label, Caption, DeviceId
